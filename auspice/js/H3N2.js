@@ -2,6 +2,7 @@ var file_prefix = 'H3N2_';
 var path = '/data/';
 var dfreq_dn = 2;
 var tip_labels = true;
+var branch_labels = false;
 
 var	vaccineChoice = {};
 vaccineChoice['A/Fujian/411/2002'] = "2003-09-25";

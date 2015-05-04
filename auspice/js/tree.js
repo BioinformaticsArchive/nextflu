@@ -210,6 +210,8 @@ d3.json(path + file_prefix + "tree.json", function(error, root) {
 		var mutations = treeplot.selectAll(".branchLabel")
 			.data(nodes)
 			.enter()
+			.append("a")
+			.attr("xlink:href", "http://en.wikipedia.org/wiki/Mutation")
 			.append("text")
 			.attr("class", "branchLabel")
 			.style("font-size", branchLabelSize)			
