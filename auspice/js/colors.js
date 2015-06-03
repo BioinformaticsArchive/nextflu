@@ -64,6 +64,11 @@ var dateColorScale = d3.scale.linear().clamp([true])
 	.domain(dateColorDomain)
 	.range(colors[10]);
 
+function desaturate(col) {
+	var modCol = d3.interpolateRgb(col, "#CCC")(1.0);
+	return d3.rgb(modCol).toString();
+}
+
 // "ep", "ne" and "rb" need no adjustments
 function adjust_coloring_by_date() {
 	if (colorBy == "lbi") {

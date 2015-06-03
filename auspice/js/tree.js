@@ -232,8 +232,10 @@ d3.json(path + file_prefix + "tree.json", function(error, root) {
 			}
 			if (colorBy=='region'){
 				legend.selectAll('.map_feature')
-					.filter(function (m) { return patch_in_list(m, d);})
-					.style("fill", function (m){return d3.rgb(patch_color(m)).brighter();});
+//					.filter(function (m) { return patch_in_list(m, d);})
+					.style("fill", function (m){
+						return (patch_in_list(m, d.target) ? d3.rgb(patch_color(m)).brighter() : d3.rgb("#CCC"));
+					});
 				}
 			})
 		.on('mouseout', function(d) {
@@ -241,7 +243,7 @@ d3.json(path + file_prefix + "tree.json", function(error, root) {
 			if (typeof addClade !="undefined") {clearTimeout(clade_freq_event);};
 			if (colorBy=='region'){
 				legend.selectAll('.map_feature')
-					.filter(function (m) { return patch_in_list(m, d);})
+//					.filter(function (m) { return patch_in_list(m, d);})
 					.style("fill", function (m){return d3.rgb(patch_color(m));});
 				}
 		})		
@@ -309,10 +311,11 @@ d3.json(path + file_prefix + "tree.json", function(error, root) {
 			virusTooltip.show(d, this);
 			if (colorBy=='region'){
 				legend.selectAll('.map_feature')
-					.filter(function (m) { return match_region(m, d);})
-					.style("fill", function(m) {
-						return d3.rgb(colorScale(d.coloring)).brighter();});
-			}
+//					.filter(function (m) { return patch_in_list(m, d);})
+					.style("fill", function (m){
+						return (patch_in_list(m, d) ? d3.rgb(patch_color(m)).brighter() : d3.rgb("#CCC"));
+					});
+			}	
 		})
 		.on('click', function(d) {
 			if ((typeof d.db != "undefined") && (d.db == "GISAID") && (typeof d.accession != "undefined")) {
@@ -326,7 +329,7 @@ d3.json(path + file_prefix + "tree.json", function(error, root) {
 			virusTooltip.hide(d, this);
 			if (colorBy=='region'){
 				legend.selectAll('.map_feature')
-					.filter(function (m) { return match_region(m, d);})
+				//	.filter(function (m) { return match_region(m, d);})
 					.style("fill", function (){return colorScale(d.coloring);});
 			}
 		})

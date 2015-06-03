@@ -151,12 +151,12 @@ function match_region(map_region, tip){
   return tmp==tip.region.replace(' ','');
 }
 
-function patch_in_list(map_region, branch){
-  var tmp = patch_region_name(map_region);
-  for (reg in branch.target.allRegions){
-    if (tmp==reg.replace(' ','')) return true;
-  }
-  return false;
+function patch_in_list(map_region, elem){
+	var tmp = patch_region_name(map_region);
+	for (reg in elem.allRegions){
+		if (tmp==reg.replace(' ','')) return true;
+	}
+	return false;
 }
 
 
