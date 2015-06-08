@@ -275,7 +275,6 @@ class H3N2_process(process, H3N2_filter, H3N2_clean, H3N2_refine):
 			# exporting to json, including the H3N2 specific fields
 			self.export_to_auspice(tree_fields = ['ep', 'ne', 'rb', 'aa_muts','accession','isolate_id', 'lab','db', 'country'], 
 			                       annotations = ['3c2.a', '3c3.a'])
-			self.generate_indexHTML()
 
 if __name__=="__main__":
 	all_steps = ['filter', 'align', 'clean', 'tree', 'ancestral', 'refine', 'frequencies','genotype_frequencies', 'export']

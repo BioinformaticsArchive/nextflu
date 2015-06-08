@@ -234,41 +234,6 @@ class process(virus_frequencies):
 									for y,m in sorted(self.date_region_count.keys()) ]
 		write_json(meta, self.auspice_meta_fname, indent=0)
 
-	def generate_indexHTML(self):
-		htmlpath = '../auspice/'
-		if self.virus_type is not None: 
-			htmlpath+=self.virus_type+'/'
-		if self.resolution is not None: 
-			htmlpath+=self.resolution+'/'
-
-		if not os.path.isdir(htmlpath): os.makedirs(htmlpath)
-		if "layout" in self.kwargs:
-			tmp_layout=self.kwargs["layout"]
-		else:
-			tmp_layout="auspice"
-		with open(htmlpath+'index.html','w') as out:
-			out.write("---\ntitle: nextflu / "+self.virus_type+" / "+self.resolution_prefix.rstrip('_')
-					  +"\nlayout: "+tmp_layout
-					  +"\nvirus: "+self.virus_type+"\nresolution: "+self.resolution_prefix.rstrip('_')+"\n")
-			if "html_vars"  in self.kwargs:
-				for vname, val in self.kwargs["html_vars"].iteritems():
-					out.write(vname+": "+ val+'\n')
-			dt=self.time_interval[1]-self.time_interval[0]
-			step = 0.5 if dt<4 else 1 if dt<7 else dt//5
-			out.write('---\n\n')
-			out.write('<script>\n')
-			out.write('var file_prefix = "'+self.prefix+self.resolution_prefix+'";\n')
-			out.write('var time_window = '+str(max(1, dt//3))+';\n')
-			out.write('var time_ticks=['+', '.join(map(str, np.arange(np.ceil(self.time_interval[0]), np.ceil(self.time_interval[1]), step)))+'];\n')
-			if "js_vars" in self.kwargs:
-				for vname, val in self.kwargs['js_vars'].iteritems():
-					if isinstance(val, basestring):
-						out.write('var '+vname+' = "'+val+'";\n')
-					else:						
-						out.write('var '+vname+' = '+str(val)+';\n')
-			out.write('{%include '+self.virus_type+'_meta.js %}\n')
-			out.write('</script>\n\n')
-
 	def align(self, fast=False):
 		'''
 		aligns viruses using mafft. produces temporary files and deletes those at the end
