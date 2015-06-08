@@ -1,4 +1,6 @@
-var regions = ["Africa", "SouthAmerica", "WestAsia", "Oceania", "Europe", "JapanKorea", "NorthAmerica", "SoutheastAsia", "SouthAsia", "China"]
+var genericDomain = [0,0.111,0.222,0.333, 0.444, 0.555, 0.666, 0.777, 0.888, 1.0];
+var path = '/data/';
+var tip_labels = true;
 
 var cladeToSeq = {}
 
@@ -33,13 +35,7 @@ var legend = d3.select("#legend")
 
 var colorBy = document.getElementById("coloring").value;
 var colorScale;
-var epiColorDomain = genericDomain;
-var nonEpiColorDomain = genericDomain;
-var rbsColorDomain = genericDomain;
-var dateColorDomain = genericDomain;
-var dfreqColorDomain = genericDomain.map(function(d){return Math.round(100*(-0.18+d*0.36))/100;});
 var time_step;
-
 
 d3.json(path + file_prefix + "meta.json", function(error, json) {
     if (error) return console.warn(error);
