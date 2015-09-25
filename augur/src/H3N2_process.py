@@ -258,6 +258,11 @@ class H3N2_process(process, H3N2_filter, H3N2_clean, H3N2_refine):
 			self.subsample(viruses_per_month, 
 				prioritize=forced_strains, all_priority=self.force_include_all, 
 				region_specific = self.max_global)
+			vaccine_by_date = self.viruses_by_date_region(self.vaccine_strains)
+			for y,m,reg in vaccine_by_date:
+				if 	y+(m-0.5)/12.0<self.time_interval[0] and 
+					y+(m-0.5)/12.0>self.time_interval[0]-2:
+					self.viruses.extend(vaccine_by_date[(y,m,reg)])
 			self.dump()
 		else:
 			self.load()
