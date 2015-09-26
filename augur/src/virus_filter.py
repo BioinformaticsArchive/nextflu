@@ -211,6 +211,25 @@ class flu_filter(virus_filter):
 		for v in self.viruses:
 			v['db']="GISAID"
 
+	def force_vaccine_strains(self, min_vac = 1, pre_interval = 2):
+		vaccine_by_date = sorted(self.viruses_by_date_region(self.vaccine_strains).items(), reverse=True)
+		vac_count = 0
+		for (y,m,reg), vacs in vaccine_by_date:
+			vac_date = y+(m-0.5)/12.0
+			if vac_date>=self.time_interval[0] and vac_date<self.time_interval[1]: # already included
+				vac_count+=len(vacs)
+			elif vac_date<self.time_interval[0] and vac_date>=self.time_interval[0]-pre_interval:
+				self.viruses.extend(vacs)
+				vac_count+=len(vacs)
+		if vac_count<min_vac: #if not enough vaccine strains are included
+			for (y,m,reg), vacs in vaccine_by_date:
+				vac_date = y+(m-0.5)/12.0
+				if vac_date<self.time_interval[0]-pre_interval: # include older strains if necessary
+					self.viruses.extend(vacs)
+					vac_count+=len(vacs)
+					if vac_count>=min_vac: # stop if required vaccine strain count is reached
+						break
+
 	def filter_strain_names(self):
 		self.viruses = filter(lambda v: re.match(r'^[AB]/', v['strain']) != None, self.viruses)
 

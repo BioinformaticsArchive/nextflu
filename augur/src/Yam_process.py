@@ -190,6 +190,7 @@ class BYam_process(process, BYam_filter, BYam_clean, BYam_refine):
 			self.subsample(viruses_per_month, 
 				prioritize=forced_strains, all_priority=self.force_include_all, 
 				region_specific = self.max_global)
+			self.force_vaccine_strains(min_vac=1, pre_interval=2)
 			self.dump()
 		else:
 			self.load()
